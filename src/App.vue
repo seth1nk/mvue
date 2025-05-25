@@ -3,7 +3,7 @@
     <div class="wrapper">
       <router-view></router-view>
     </div>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   </header>
   <main>
     <TheWelcome />
@@ -19,8 +19,8 @@
         <li><router-link to="/" class="button">Главная</router-link></li>
         <li><router-link to="/about" class="button">О нас</router-link></li>
         <li><router-link to="/contact" class="button">Контакты</router-link></li>
-        <li v-if="isAuthenticated"><router-link to="/repairs" class="button">Ремонты</router-link></li>
-        <li v-if="isAuthenticated"><router-link to="/clients" class="button">Клиенты</router-link></li>
+        <li v-if="isAuthenticated"><router-link to="/applicants" class="button">Соискатели</router-link></li>
+        <li v-if="isAuthenticated"><router-link to="/vacancies" class="button">Вакансии</router-link></li>
         <li v-if="!isAuthenticated"><router-link to="/login" class="button">Войти</router-link></li>
         <li v-if="!isAuthenticated"><router-link to="/register" class="button">Зарегистрироваться</router-link></li>
         <li v-if="isAuthenticated" class="welcome-message"><span>Добро пожаловать, {{ username }}</span></li>
@@ -103,16 +103,16 @@ export default {
   top: 50%;
   right: 0;
   transform: translateY(-50%);
-  background: rgba(26, 32, 44, 0.95); /* Тёмный прозрачный фон */
+  background: rgba(255, 255, 255, 0.95); /* Полупрозрачный белый фон */
   backdrop-filter: blur(10px);
-  border-left: 1px solid rgba(255, 255, 255, 0.3); /* Белая граница */
+  border-left: 1px solid rgba(46, 125, 50, 0.3); /* Зеленая граница */
   padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 15px;
   border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 /* Логотип */
@@ -125,11 +125,14 @@ export default {
   max-width: 100px;
   height: auto;
   border-radius: 5px;
-  transition: transform 0.3s ease;
+  border: 2px solid #e8f5e9; /* Очень светло-зеленый бордер */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, border-color 0.3s ease;
 }
 
 .logo:hover {
   transform: scale(1.05);
+  border-color: #4caf50; /* Яркий зеленый */
 }
 
 /* Список кнопок */
@@ -148,18 +151,18 @@ export default {
   display: block;
   width: 180px;
   padding: 10px 15px;
-  background: #ff6b6b; /* Яркий розовый фон */
+  background: #2e7d32; /* Зеленый фон */
   color: #ffffff; /* Белый текст */
   text-decoration: none;
   border-radius: 8px;
-  font-weight: bold;
+  font-weight: 600;
   text-align: center;
   transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .button:hover {
-  background: #4b0082; /* Тёмный фиолетовый при ховере */
+  background: #1b5e20; /* Темно-зеленый при ховере */
   transform: translateY(-2px);
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
@@ -167,23 +170,47 @@ export default {
 /* Кнопка админ-панели */
 .admin-button {
   display: block;
-  width: auto;
-  padding: 10px 15px;
-  background: linear-gradient(135deg, #ff6b6b, #4b0082); /* Градиент розовый-фиолетовый */
+  width: 200px;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #4caf50, #2e7d32); /* Яркий зеленый градиент */
   color: #ffffff;
   text-decoration: none;
-  border-radius: 8px;
-  font-weight: bold;
+  border-radius: 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
   text-transform: uppercase;
   text-align: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  border: 2px solid #ffffff; /* Белый бордер для акцента */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .admin-button:hover {
-  background: linear-gradient(135deg, #4b0082, #ff6b6b);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, #2e7d32, #4caf50);
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+  border-color: #e8f5e9; /* Светло-зеленый бордер */
+}
+
+.admin-button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.4s ease, height 0.4s ease;
+}
+
+.admin-button:hover::after {
+  width: 300px;
+  height: 300px;
 }
 
 /* Приветственное сообщение */
@@ -192,10 +219,10 @@ export default {
   width: auto;
   padding: 10px 15px;
   font-size: 16px;
-  color: #ffffff; /* Белый текст */
-  font-weight: bold;
+  color: #1a3c34; /* Темно-зеленый текст */
+  font-weight: 600;
   text-align: center;
-  background: rgba(255, 255, 255, 0.2); /* Полупрозрачный белый фон */
+  background: rgba(232, 245, 233, 0.2); /* Полупрозрачный зеленый фон */
   border-radius: 8px;
 }
 
@@ -216,7 +243,12 @@ export default {
     font-size: 0.9rem;
   }
 
-  .admin-button,
+  .admin-button {
+    width: 150px;
+    padding: 10px 15px;
+    font-size: 1rem;
+  }
+
   .welcome-message span {
     padding: 8px 10px;
     font-size: 0.9rem;
