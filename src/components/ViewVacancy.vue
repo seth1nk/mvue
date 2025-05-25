@@ -34,7 +34,7 @@ export default {
       vacancy: null,
       loading: true,
       errorMessage: null,
-      backendUrl: 'http://localhost:3000',
+      backendUrl: 'https://mnode.onrender.com',
     };
   },
   async created() {
